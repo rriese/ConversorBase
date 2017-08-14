@@ -1,0 +1,87 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="../extjs/resources/css/ext-all.css">
+		<script type="text/javascript" src="../extjs/resources/js/functions.js"></script>
+		<script type="text/javascript" src="../extjs/ext-all.js"></script>
+	</head>
+	<body>
+		<div id="form" style="text-align: center"></div>
+	</body>
+		<script type="text/javascript">
+		
+		Ext.onReady(function() {
+		
+			Ext.create('Ext.window.Window', {
+			
+				title: 'Conversão de Unidades',
+				height: 185,
+				width: 300,
+				layout: 'vbox',
+				modal: true,
+				resizable: false,
+				autoShow: true,
+				closable: false,
+				constrain: true,
+				
+				defaults: {
+					margin: '10 0 5 15'
+				},
+								
+				items: [{
+					fieldLabel: 'Hexadecimal',
+					id: 'hexa-input',
+					xtype: 'textfield',
+					
+					listeners: {
+						"change": {
+							fn: function(field, e) {
+								//console.log(oi(Ext.getCmp('hexa-input').value));
+							}
+						}
+					}
+				}, {
+					fieldLabel: 'Decimal',
+					id: 'dec-input',
+					xtype: 'textfield',
+					
+					listeners: {
+						"change": {
+							fn: function(field, e) {
+								Ext.getCmp('bin-input').setValue(getBinaryFromDecimal(Ext.getCmp('dec-input').value));
+								Ext.getCmp('oct-input').setValue(getOctalFromDecimal(Ext.getCmp('dec-input').value));
+								//console.log('Binario: ' + getBinaryFromDecimal(Ext.getCmp('dec-input').value));
+							}
+						}
+					}
+				}, {
+					fieldLabel: 'Octal',
+					id: 'oct-input',
+					xtype: 'textfield',
+					
+					listeners: {
+						"change": {
+							fn: function(field, e) {
+								//console.log(this.getBinaryFromDecimal(10));
+							}
+						}
+					}
+				}, {
+					fieldLabel: 'Binário',
+					id: 'bin-input',
+					xtype: 'textfield',
+					
+					listeners: {
+						"change": {
+							fn: function(field, e) {
+								//console.log(this.getBinaryFromDecimal(10));
+							}
+						}
+					}
+				}]
+				
+			});
+			
+		});
+		
+		</script>
+</html>
