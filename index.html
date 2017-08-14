@@ -47,8 +47,17 @@
 					listeners: {
 						"change": {
 							fn: function(field, e) {
-								Ext.getCmp('bin-input').setValue(getBinaryFromDecimal(Ext.getCmp('dec-input').value));
-								Ext.getCmp('oct-input').setValue(getOctalFromDecimal(Ext.getCmp('dec-input').value));
+								if (Ext.getCmp('dec-input').value.length > 0) {
+									Ext.getCmp('bin-input').setValue(getBinaryFromDecimal(Ext.getCmp('dec-input').value));
+									Ext.getCmp('hexa-input').setDisabled(true);
+									Ext.getCmp('bin-input').setDisabled(true);
+									Ext.getCmp('oct-input').setDisabled(true);
+									Ext.getCmp('oct-input').setValue(getOctalFromDecimal(Ext.getCmp('dec-input').value));
+								} else {
+									Ext.getCmp('bin-input').setDisabled(false);
+									Ext.getCmp('oct-input').setDisabled(false);
+									Ext.getCmp('hexa-input').setDisabled(false);
+								}
 								//console.log('Binario: ' + getBinaryFromDecimal(Ext.getCmp('dec-input').value));
 							}
 						}
