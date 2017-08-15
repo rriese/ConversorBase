@@ -38,7 +38,7 @@ function getHexadecimalFromDecimal(number) {
 
     divisao = Math.trunc(number / 16);
     resto = Math.trunc(number) - (Math.trunc(divisao * 16));
-    hexa = Math.trunc(resto);
+    hexa = getLetter(Math.trunc(resto));
     if (divisao > 16) {
         hexa = getHexadecimalFromDecimal(Math.trunc(divisao)) + hexa;
         return hexa;
@@ -47,6 +47,35 @@ function getHexadecimalFromDecimal(number) {
     }
 }
 
+function getLetter(number) {
+	if (number >= 10 && number < 15) {
+		switch (number) {
+			case 10:
+				return 'A';
+			case 11:
+				return 'B';
+			case 12:
+				return 'C';
+			case 13:
+				return 'D';
+			case 14:
+				return 'E';
+			case 15:
+				return 'F';
+			default:
+				return '';
+		}
+	} else {
+		return number;
+	}
+}
+
 function getDecimalFromBinary(number) {
-	console.log(number);
+	var soma = 0, render, result;
+	for(var i = number.toString().length; i >= 0; i--) {
+		render = number.toString().charAt(i);
+		result = render.toString() == '0' ? Math.pow(2, i) * 0 : Math.pow(2, i) * 1;
+		soma += result;
+	}
+	return soma;
 }
