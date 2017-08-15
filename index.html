@@ -6,94 +6,104 @@
 	</head>
 	<body>
 		<div id="form" style="text-align: center"></div>
-	</body>
 		<script type="text/javascript">
 		
 		Ext.onReady(function() {
-		
-			Ext.create('Ext.window.Window', {
-			
-				title: 'Conversão de Unidades',
-				height: 185,
-				width: 300,
-				layout: 'vbox',
-				modal: true,
-				resizable: false,
-				autoShow: true,
-				closable: false,
-				constrain: true,
-				
-				defaults: {
-					margin: '10 0 5 15'
-				},
-								
-				items: [{
-					fieldLabel: 'Hexadecimal',
-					id: 'hexa-input',
-					xtype: 'textfield',
-					
-					listeners: {
-						"change": {
-							fn: function(field, e) {
-								//console.log(oi(Ext.getCmp('hexa-input').value));
+
+    Ext.create('Ext.window.Window', {
+
+        title: 'Conversão de Unidades',
+        height: 185,
+        width: 300,
+        layout: 'vbox',
+        modal: true,
+        resizable: false,
+        autoShow: true,
+        closable: false,
+        constrain: true,
+
+        defaults: {
+            margin: '10 0 5 15'
+        },
+
+        items: [{
+            fieldLabel: 'Hexadecimal',
+            id: 'hexa-input',
+            xtype: 'textfield',
+
+            listeners: {
+                "change": {
+                    fn: function(field, e) {
+                        //console.log(oi(Ext.getCmp('hexa-input').value));
+                    }
+                }
+            }
+        }, {
+            fieldLabel: 'Decimal',
+            id: 'dec-input',
+            xtype: 'textfield',
+
+            listeners: {
+                "change": {
+                    fn: function(field, e) {
+						if (Ext.getCmp('dec-input').readOnly == false) {
+							if (Ext.getCmp('dec-input').value.length > 0) {
+								Ext.getCmp('hexa-input').setReadOnly(true);
+								Ext.getCmp('bin-input').setReadOnly(true);
+								Ext.getCmp('oct-input').setReadOnly(true);
+								Ext.getCmp('bin-input').setValue(getBinaryFromDecimal(Ext.getCmp('dec-input').value));
+								Ext.getCmp('oct-input').setValue(getOctalFromDecimal(Ext.getCmp('dec-input').value));
+								Ext.getCmp('hexa-input').setValue(getHexadecimalFromDecimal(Ext.getCmp('dec-input').value));
+							} else {
+								Ext.getCmp('bin-input').setValue(null);
+								Ext.getCmp('oct-input').setValue(null);
+								Ext.getCmp('hexa-input').setValue(null);
+								Ext.getCmp('bin-input').setReadOnly(false);
+								Ext.getCmp('oct-input').setReadOnly(false);
+								Ext.getCmp('hexa-input').setReadOnly(false);
+							}
+						}						
+                    }
+                }
+            }
+        }, {
+            fieldLabel: 'Octal',
+            id: 'oct-input',
+            xtype: 'textfield',
+
+            listeners: {
+                "change": {
+                    fn: function(field, e) {
+                        
+                    }
+                }
+            }
+        }, {
+            fieldLabel: 'Binário',
+            id: 'bin-input',
+            xtype: 'textfield',
+
+            listeners: {
+                "change": {
+                    fn: function(field, e) {
+						if (Ext.getCmp('bin-input').readOnly == false) {
+							if (Ext.getCmp('bin-input').value.length > 0) {
+								Ext.getCmp('dec-input').setReadOnly(true);
+								Ext.getCmp('dec-input').setValue(getDecimalFromBinary(2555));
+							} else {
+								Ext.getCmp('dec-input').setValue(null);
+								Ext.getCmp('dec-input').setReadOnly(false);
 							}
 						}
-					}
-				}, {
-					fieldLabel: 'Decimal',
-					id: 'dec-input',
-					xtype: 'textfield',
-					
-					listeners: {
-						"change": {
-							fn: function(field, e) {
-								if (Ext.getCmp('dec-input').value.length > 0) {
-									Ext.getCmp('bin-input').setValue(getBinaryFromDecimal(Ext.getCmp('dec-input').value));
-									Ext.getCmp('oct-input').setValue(getOctalFromDecimal(Ext.getCmp('dec-input').value));
-									Ext.getCmp('hexa-input').setValue(getHexadecimalFromDecimal(Ext.getCmp('dec-input').value));
-									Ext.getCmp('hexa-input').setReadOnly(true);
-									Ext.getCmp('bin-input').setReadOnly(true);
-									Ext.getCmp('oct-input').setReadOnly(true);
-								} else {
-									Ext.getCmp('bin-input').setValue(null);
-									Ext.getCmp('oct-input').setValue(null);
-									Ext.getCmp('hexa-input').setValue(null);
-									Ext.getCmp('bin-input').setReadOnly(false);
-									Ext.getCmp('oct-input').setReadOnly(false);
-									Ext.getCmp('hexa-input').setReadOnly(false);
-								}
-							}
-						}
-					}
-				}, {
-					fieldLabel: 'Octal',
-					id: 'oct-input',
-					xtype: 'textfield',
-					
-					listeners: {
-						"change": {
-							fn: function(field, e) {
-								//console.log(this.getBinaryFromDecimal(10));
-							}
-						}
-					}
-				}, {
-					fieldLabel: 'Binário',
-					id: 'bin-input',
-					xtype: 'textfield',
-					
-					listeners: {
-						"change": {
-							fn: function(field, e) {
-								//console.log(this.getBinaryFromDecimal(10));
-							}
-						}
-					}
-				}]
-				
-			});
-			
-		});
+                    }
+                }
+            }
+        }]
+
+    });
+
+});
 		
 		</script>
+	</body>
 </html>
