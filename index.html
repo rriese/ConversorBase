@@ -42,6 +42,7 @@
             fieldLabel: 'Decimal',
             id: 'dec-input',
             xtype: 'textfield',
+			maskRe: '/[0-9.]/',
 
             listeners: {
                 "change": {
@@ -74,7 +75,22 @@
             listeners: {
                 "change": {
                     fn: function(field, e) {
-                        
+                        if (Ext.getCmp('oct-input').readOnly == false) {
+							if (Ext.getCmp('oct-input').value.length > 0) {
+								Ext.getCmp('bin-input').setReadOnly(true);
+								Ext.getCmp('dec-input').setReadOnly(true);
+								Ext.getCmp('hexa-input').setReadOnly(true);
+								Ext.getCmp('dec-input').setValue(getDecimal(Ext.getCmp('oct-input').value, 8));
+								//Ext.getCmp('oct-input').setValue(getBaseFromBinary(Ext.getCmp('bin-input').value));
+							} else {
+								Ext.getCmp('bin-input').setValue(null);
+								Ext.getCmp('dec-input').setValue(null);
+								Ext.getCmp('hexa-input').setValue(null);
+								Ext.getCmp('bin-input').setReadOnly(false);
+								Ext.getCmp('dec-input').setReadOnly(false);
+								Ext.getCmp('hexa-input').setReadOnly(false);
+							}
+						}
                     }
                 }
             }
@@ -88,11 +104,18 @@
                     fn: function(field, e) {
 						if (Ext.getCmp('bin-input').readOnly == false) {
 							if (Ext.getCmp('bin-input').value.length > 0) {
+								Ext.getCmp('oct-input').setReadOnly(true);
 								Ext.getCmp('dec-input').setReadOnly(true);
-								Ext.getCmp('dec-input').setValue(getDecimalFromBinary(Ext.getCmp('bin-input').value));
+								Ext.getCmp('hexa-input').setReadOnly(true);
+								Ext.getCmp('dec-input').setValue(getDecimal(Ext.getCmp('bin-input').value, 2));
+								Ext.getCmp('oct-input').setValue(getOctalFromBinary(Ext.getCmp('bin-input').value));
 							} else {
+								Ext.getCmp('oct-input').setValue(null);
 								Ext.getCmp('dec-input').setValue(null);
+								Ext.getCmp('hexa-input').setValue(null);
+								Ext.getCmp('oct-input').setReadOnly(false);
 								Ext.getCmp('dec-input').setReadOnly(false);
+								Ext.getCmp('hexa-input').setReadOnly(false);
 							}
 						}
                     }
