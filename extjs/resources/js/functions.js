@@ -1,6 +1,5 @@
 function getBinaryFromDecimal(number) {
     var divisao, binary = '';
-    //var number = 10;
 
     divisao = number / 2;
 
@@ -43,12 +42,16 @@ function getHexadecimalFromDecimal(number) {
         hexa = getHexadecimalFromDecimal(Math.trunc(divisao)) + hexa;
         return hexa;
     } else {
-        return Math.trunc(divisao) + '' + hexa;
+		if (number >= 10) {
+			return number > 15 ? Math.trunc(divisao) + '' + hexa : hexa;
+		} else {
+			return parseInt(number);
+		}
     }
 }
 
 function getLetter(number) {
-	if (number >= 10 && number < 15) {
+	if (number >= 10 && number <= 15) {
 		switch (number) {
 			case 10:
 				return 'A';
@@ -70,12 +73,52 @@ function getLetter(number) {
 	}
 }
 
-function getDecimalFromBinary(number) {
-	var soma = 0, render, result;
-	for(var i = number.toString().length; i >= 0; i--) {
-		render = number.toString().charAt(i);
-		result = render.toString() == '0' ? Math.pow(2, i) * 0 : Math.pow(2, i) * 1;
-		soma += result;
+function getDecimal(number, base) {
+	var soma = 0, result;
+	for(var i = 0; i < number.length; i++) {
+		if (base == 2) {
+			soma += number.charAt(i) == '1' ? Math.pow(base, (number.length-1)-i) : 0;
+		} else if (base == 8) {
+			soma += Math.pow(base, (number.length-1)-i) * parseInt(number.charAt(i));
+		} else if (base == 16) {
+			
+		}
 	}
 	return soma;
+}
+
+function getOctalNumber(bin) {
+	switch (bin) {
+		case '000':
+			return 0;
+		case '001':
+			return 1;
+		case '010':
+			return 2;
+		case '011':
+			return 3;
+		case '100':
+			return 4;
+		case '101':
+			return 5;
+		case '110':
+			return 6;
+		case '111':
+			return 7;
+		default:
+			return 0;
+	}
+}
+
+function getOctalFromBinary(number) {
+	var bin = '', octal = '';
+	
+	for(var i = 0; i < number.length; i++) {
+		bin += number.charAt(i);
+		if (bin.length == 3) {
+			octal += getOctalNumber(bin);
+			bin = '';
+		}
+	}
+	return octal;
 }
