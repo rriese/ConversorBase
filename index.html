@@ -7,8 +7,8 @@
 	<body>
 		<div id="form" style="text-align: center"></div>
 		<script type="text/javascript">
-		
-		Ext.onReady(function() {
+
+Ext.onReady(function() {
 
     Ext.create('Ext.window.Window', {
 
@@ -34,7 +34,23 @@
             listeners: {
                 "change": {
                     fn: function(field, e) {
-                        //console.log(oi(Ext.getCmp('hexa-input').value));
+                        if (Ext.getCmp('hexa-input').readOnly == false) {
+                            if (Ext.getCmp('hexa-input').value.length > 0) {
+                                Ext.getCmp('dec-input').setReadOnly(true);
+                                Ext.getCmp('bin-input').setReadOnly(true);
+                                Ext.getCmp('oct-input').setReadOnly(true);
+                                Ext.getCmp('dec-input').setValue(getDecimal(Ext.getCmp('hexa-input').value, 16));
+								Ext.getCmp('oct-input').setValue(getOctalFromDecimal(getDecimal(Ext.getCmp('hexa-input').value, 16)));
+								Ext.getCmp('bin-input').setValue(getBinaryFromOctal(getOctalFromDecimal(getDecimal(Ext.getCmp('hexa-input').value, 16))));
+                            } else {
+                                Ext.getCmp('bin-input').setValue(null);
+                                Ext.getCmp('oct-input').setValue(null);
+                                Ext.getCmp('dec-input').setValue(null);
+                                Ext.getCmp('bin-input').setReadOnly(false);
+                                Ext.getCmp('oct-input').setReadOnly(false);
+                                Ext.getCmp('dec-input').setReadOnly(false);
+                            }
+                        }
                     }
                 }
             }
@@ -42,28 +58,27 @@
             fieldLabel: 'Decimal',
             id: 'dec-input',
             xtype: 'textfield',
-			maskRe: '/[0-9.]/',
 
             listeners: {
                 "change": {
                     fn: function(field, e) {
-						if (Ext.getCmp('dec-input').readOnly == false) {
-							if (Ext.getCmp('dec-input').value.length > 0) {
-								Ext.getCmp('hexa-input').setReadOnly(true);
-								Ext.getCmp('bin-input').setReadOnly(true);
-								Ext.getCmp('oct-input').setReadOnly(true);
-								Ext.getCmp('bin-input').setValue(getBinaryFromDecimal(Ext.getCmp('dec-input').value));
-								Ext.getCmp('oct-input').setValue(getOctalFromDecimal(Ext.getCmp('dec-input').value));
-								Ext.getCmp('hexa-input').setValue(getHexadecimalFromDecimal(Ext.getCmp('dec-input').value));
-							} else {
-								Ext.getCmp('bin-input').setValue(null);
-								Ext.getCmp('oct-input').setValue(null);
-								Ext.getCmp('hexa-input').setValue(null);
-								Ext.getCmp('bin-input').setReadOnly(false);
-								Ext.getCmp('oct-input').setReadOnly(false);
-								Ext.getCmp('hexa-input').setReadOnly(false);
-							}
-						}						
+                        if (Ext.getCmp('dec-input').readOnly == false) {
+                            if (Ext.getCmp('dec-input').value.length > 0) {
+                                Ext.getCmp('hexa-input').setReadOnly(true);
+                                Ext.getCmp('bin-input').setReadOnly(true);
+                                Ext.getCmp('oct-input').setReadOnly(true);
+                                Ext.getCmp('bin-input').setValue(getBinaryFromDecimal(Ext.getCmp('dec-input').value));
+                                Ext.getCmp('oct-input').setValue(getOctalFromDecimal(Ext.getCmp('dec-input').value));
+                                Ext.getCmp('hexa-input').setValue(getHexadecimalFromDecimal(Ext.getCmp('dec-input').value));
+                            } else {
+                                Ext.getCmp('bin-input').setValue(null);
+                                Ext.getCmp('oct-input').setValue(null);
+                                Ext.getCmp('hexa-input').setValue(null);
+                                Ext.getCmp('bin-input').setReadOnly(false);
+                                Ext.getCmp('oct-input').setReadOnly(false);
+                                Ext.getCmp('hexa-input').setReadOnly(false);
+                            }
+                        }
                     }
                 }
             }
@@ -76,21 +91,22 @@
                 "change": {
                     fn: function(field, e) {
                         if (Ext.getCmp('oct-input').readOnly == false) {
-							if (Ext.getCmp('oct-input').value.length > 0) {
-								Ext.getCmp('bin-input').setReadOnly(true);
-								Ext.getCmp('dec-input').setReadOnly(true);
-								Ext.getCmp('hexa-input').setReadOnly(true);
-								Ext.getCmp('dec-input').setValue(getDecimal(Ext.getCmp('oct-input').value, 8));
-								//Ext.getCmp('oct-input').setValue(getBaseFromBinary(Ext.getCmp('bin-input').value));
-							} else {
-								Ext.getCmp('bin-input').setValue(null);
-								Ext.getCmp('dec-input').setValue(null);
-								Ext.getCmp('hexa-input').setValue(null);
-								Ext.getCmp('bin-input').setReadOnly(false);
-								Ext.getCmp('dec-input').setReadOnly(false);
-								Ext.getCmp('hexa-input').setReadOnly(false);
-							}
-						}
+                            if (Ext.getCmp('oct-input').value.length > 0) {
+                                Ext.getCmp('bin-input').setReadOnly(true);
+                                Ext.getCmp('dec-input').setReadOnly(true);
+                                Ext.getCmp('hexa-input').setReadOnly(true);
+                                Ext.getCmp('dec-input').setValue(getDecimal(Ext.getCmp('oct-input').value, 8));
+                                Ext.getCmp('bin-input').setValue(getBinaryFromOctal(Ext.getCmp('oct-input').value));
+                                Ext.getCmp('hexa-input').setValue(getHexadecimalFromDecimal(getDecimal(Ext.getCmp('oct-input').value, 8)));
+                            } else {
+                                Ext.getCmp('bin-input').setValue(null);
+                                Ext.getCmp('dec-input').setValue(null);
+                                Ext.getCmp('hexa-input').setValue(null);
+                                Ext.getCmp('bin-input').setReadOnly(false);
+                                Ext.getCmp('dec-input').setReadOnly(false);
+                                Ext.getCmp('hexa-input').setReadOnly(false);
+                            }
+                        }
                     }
                 }
             }
@@ -102,29 +118,28 @@
             listeners: {
                 "change": {
                     fn: function(field, e) {
-						if (Ext.getCmp('bin-input').readOnly == false) {
-							if (Ext.getCmp('bin-input').value.length > 0) {
-								Ext.getCmp('oct-input').setReadOnly(true);
-								Ext.getCmp('dec-input').setReadOnly(true);
-								Ext.getCmp('hexa-input').setReadOnly(true);
-								Ext.getCmp('dec-input').setValue(getDecimal(Ext.getCmp('bin-input').value, 2));
-								Ext.getCmp('oct-input').setValue(getOctalFromBinary(Ext.getCmp('bin-input').value));
-							} else {
-								Ext.getCmp('oct-input').setValue(null);
-								Ext.getCmp('dec-input').setValue(null);
-								Ext.getCmp('hexa-input').setValue(null);
-								Ext.getCmp('oct-input').setReadOnly(false);
-								Ext.getCmp('dec-input').setReadOnly(false);
-								Ext.getCmp('hexa-input').setReadOnly(false);
-							}
-						}
+                        if (Ext.getCmp('bin-input').readOnly == false) {
+                            if (Ext.getCmp('bin-input').value.length > 0) {
+                                Ext.getCmp('oct-input').setReadOnly(true);
+                                Ext.getCmp('dec-input').setReadOnly(true);
+                                Ext.getCmp('hexa-input').setReadOnly(true);
+                                Ext.getCmp('dec-input').setValue(getDecimal(Ext.getCmp('bin-input').value, 2));								
+                                Ext.getCmp('oct-input').setValue(getOctalFromDecimal(getDecimal(Ext.getCmp('bin-input').value, 2)));
+                                Ext.getCmp('hexa-input').setValue(getHexadecimalFromDecimal(getDecimal(Ext.getCmp('bin-input').value, 2)));
+                            } else {
+                                Ext.getCmp('oct-input').setValue(null);
+                                Ext.getCmp('dec-input').setValue(null);
+                                Ext.getCmp('hexa-input').setValue(null);
+                                Ext.getCmp('oct-input').setReadOnly(false);
+                                Ext.getCmp('dec-input').setReadOnly(false);
+                                Ext.getCmp('hexa-input').setReadOnly(false);
+                            }
+                        }
                     }
                 }
             }
         }]
-
     });
-
 });
 		
 		</script>
