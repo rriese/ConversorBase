@@ -23,11 +23,11 @@ function getOctalFromDecimal(number) {
     divisao = Math.trunc(number / 8);
     resto = Math.trunc(number) - (Math.trunc(divisao * 8));
     octal = Math.trunc(resto);
-    if (divisao > 8) {
+    if (divisao >= 8) {
         octal = getOctalFromDecimal(Math.trunc(divisao)) + octal;
         return octal;
     } else {
-        return Math.trunc(divisao) + '' + octal;
+        return divisao != '0' ? Math.trunc(divisao) + '' + octal : octal;
     }
 }
 
@@ -51,6 +51,7 @@ function getHexadecimalFromDecimal(number) {
 }
 
 function getDecFromHexa(letter) {
+	letter = letter.toString().toUpperCase();
 	switch (letter) {
 		case 'A':
 			return 10;
@@ -121,6 +122,7 @@ function getOctalNumber(number) {
 		if (number == key) return value;
 		if (number == value) return key;
 	}
+	return '0';
 }
 
 function getBinaryFromOctal(number) {
