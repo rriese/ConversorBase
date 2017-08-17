@@ -50,6 +50,25 @@ function getHexadecimalFromDecimal(number) {
     }
 }
 
+function getDecFromHexa(letter) {
+	switch (letter) {
+		case 'A':
+			return 10;
+		case 'B':
+			return 11;
+		case 'C':
+			return 12;
+		case 'D':
+			return 13;
+		case 'E':
+			return 14;
+		case 'F':
+			return 15;
+		default:
+			return letter;
+	}
+}
+
 function getLetter(number) {
 	if (number >= 10 && number <= 15) {
 		switch (number) {
@@ -81,44 +100,34 @@ function getDecimal(number, base) {
 		} else if (base == 8) {
 			soma += Math.pow(base, (number.length-1)-i) * parseInt(number.charAt(i));
 		} else if (base == 16) {
-			
+			soma += Math.pow(base, (number.length-1)-i) * parseInt(getDecFromHexa(number.charAt(i)));
 		}
 	}
 	return soma;
 }
 
-function getOctalNumber(bin) {
-	switch (bin) {
-		case '000':
-			return 0;
-		case '001':
-			return 1;
-		case '010':
-			return 2;
-		case '011':
-			return 3;
-		case '100':
-			return 4;
-		case '101':
-			return 5;
-		case '110':
-			return 6;
-		case '111':
-			return 7;
-		default:
-			return 0;
+function getOctalNumber(number) {
+	var numbers = new Map();
+	numbers.set('0', '000');
+	numbers.set('1', '001');
+	numbers.set('2', '010');
+	numbers.set('3', '011');
+	numbers.set('4', '100');
+	numbers.set('5', '101');
+	numbers.set('6', '110');
+	numbers.set('7', '111');
+	
+	for (var [key, value] of numbers) {
+		if (number == key) return value;
+		if (number == value) return key;
 	}
 }
 
-function getOctalFromBinary(number) {
-	var bin = '', octal = '';
+function getBinaryFromOctal(number) {
+	var bin = '';
 	
 	for(var i = 0; i < number.length; i++) {
-		bin += number.charAt(i);
-		if (bin.length == 3) {
-			octal += getOctalNumber(bin);
-			bin = '';
-		}
+		bin += getOctalNumber(number.charAt(i));
 	}
-	return octal;
+	return bin;
 }
