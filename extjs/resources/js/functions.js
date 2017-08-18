@@ -128,8 +128,8 @@ function getOctalNumber(number) {
 function getBinaryFromOctal(number) {
 	var bin = '';
 	
-	for(var i = 0; i < number.length; i++) {
-		bin += getOctalNumber(number.charAt(i));
+	for(var i = 0; i < number.toString().length; i++) {
+		bin += getOctalNumber(number.toString().charAt(i));
 	}
 	return bin;
 }
