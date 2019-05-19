@@ -86,7 +86,7 @@ Ext.onReady(function() {
         }, {
             fieldLabel: 'Octal',
             id: 'oct-input',
-			maskRe: /[0-7]/,
+	    maskRe: /[0-7]/,
             xtype: 'textfield',
 
             listeners: {
@@ -115,7 +115,8 @@ Ext.onReady(function() {
         }, {
             fieldLabel: 'Binário',
             id: 'bin-input',
-			maskRe: /[0-1]/,
+	    maskRe: /[0-1]/,
+	    required: true,
             xtype: 'textfield',
 
             listeners: {
